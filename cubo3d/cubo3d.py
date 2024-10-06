@@ -83,7 +83,12 @@ class Cubo:
             relogio.tick(60)
 
     def draw_cubo(self, tela):
-        vertices_projetados = [self.projection(self.apply_transformations(vertice)) * 200 + np.array([300, 300]) for vertice in self.vertices]
+        vertices_projetados = []
+        for vertice in self.vertices:
+            transformado = self.apply_transformations(vertice)
+            projetado = self.projection(transformado)
+            ajustado = projetado * 200 + np.array([300, 300])
+            vertices_projetados.append(ajustado)
         for aresta in self.arestas:
             pygame.draw.line(tela, (255, 0, 0), vertices_projetados[aresta[0]], vertices_projetados[aresta[1]], 2)
         for vertice in vertices_projetados:
@@ -92,7 +97,12 @@ class Cubo:
     def draw_piramide(self, tela):
         vertices_piramide = np.array([[-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1], [0, 0, 1]])
         arestas_piramide = [(0, 1), (1, 2), (2, 3), (3, 0), (0, 4), (1, 4), (2, 4), (3, 4)]
-        vertices_projetados = [self.projection(self.apply_transformations(vertice)) * 200 + np.array([300, 300]) for vertice in vertices_piramide]
+        vertices_projetados = []
+        for vertice in vertices_piramide:
+            transformado = self.apply_transformations(vertice)
+            projetado = self.projection(transformado)
+            ajustado = projetado * 200 + np.array([300, 300])
+            vertices_projetados.append(ajustado)
         for aresta in arestas_piramide:
             pygame.draw.line(tela, (0, 255, 0), vertices_projetados[aresta[0]], vertices_projetados[aresta[1]], 2)
         for vertice in vertices_projetados:
